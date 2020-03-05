@@ -1,0 +1,60 @@
+<div ng-init="obtieneEventos()">
+  <div class="container">
+    <br>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4 class="titulos"><i class="fas fa-list-ol"></i> Listas de Asistencia</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="input-group">
+        <h4 class="input-group-addon titulos">Día: </h4>
+        <span>&nbsp;&nbsp;</span>
+        <select type="text" class="form-control" ng-model="diaSeleccionado" ng-change="actualizaEventos(diaSeleccionado)">
+          <option value=""></option>
+          <option value="2018-11-26">26 de Noviembre</option>
+          <option value="2018-11-27">27 de Noviembre</option>
+        </select>
+      </div>
+    </div><br>
+    <span>&nbsp;&nbsp;</span><span>&nbsp;&nbsp;</span>
+    <div class="col-xs-12">
+      <div class="input-group">
+        <h4 class="input-group-addon titulos">Nombre:</h4>
+        <span>&nbsp;&nbsp;</span>
+        <select class="form-control" ng-model="eventoSeleccionado"  ng-options="eve as eve.nombre for eve in eventosDia" ng-change="obtieneLista(eventoSeleccionado)">
+          <option value=""></option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <br>
+  <section>
+    <div class="table-responsive ">
+      <table class="table-bordered text-center">
+        <thead class="theadyo">
+          <tr>
+            <th>Nombre</th>
+            <th>Apellido Paterno</th>
+            <th>Apellido Materno</th>
+            <th>Edad</th>
+            <th>Ocupación</th>
+            <th>Lugar de Nacimiento</th>
+          </tr>
+        </thead>
+        <tbody class="cuerpot">
+          <tr ng-repeat="p in lista">
+            <td>{{p.nombre}}</td>
+            <td>{{p.appat}}</td>
+            <td>{{p.apmat}}</td>
+            <td>{{p.edad}}</td>
+            <td>{{p.ocupacion}}</td>
+            <td>{{p.lugarNacimiento}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+</div>

@@ -1,0 +1,90 @@
+body {
+  background-color: lightgrey;
+}
+input{
+  text-transform: uppercase;
+}
+.btn-success {
+    background: green;
+    color: white;
+}
+
+.btn-success: hover {
+    background: white;
+    color: white;
+}
+
+.glyphicon:hover {
+    background-color: darkred;
+}
+
+.btn:hover {
+    color: black;
+}
+
+.bt1 {
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px
+}
+
+.btn-info {
+    color: #fff;
+    background-color: #5bc0de;
+    border-color: #46b8da;
+}
+
+.btn-warning {
+    color: #fff;
+    background-color: #f0ad4e;
+    border-color: #eea236;
+}
+
+.btn-danger {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+
+.btn .btn-danger:hover {
+    color: red;
+    background-color: white;
+    border-color: red;
+}
+
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+#modalVerCita .modal-dialog .row .form-control {
+    border-radius: 0px;
+}
+
+#modalAgregarActualizar .modal-dialog .row .form-control {
+    border-radius: 0px;
+}
+
+@media print {
+    .oculto-impresion,
+    .oculto-impresion * {
+        display: none !important;
+    }
+}
+
+.bt2 {
+    padding: 6px 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    border-radius: 3px;
+    margin-left: -10px;
+}

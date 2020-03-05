@@ -1,0 +1,52 @@
+
+  <nav class=" navbar-expand-lg navbar navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">IRIS 2030</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse " id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#"> <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a data-toggle="modal" data-target="#modalGafete" class="nav-link"><i class="fas fa-users"></i> Gafete</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#selectEvento"><i class="fas fa-calendar-alt"></i> Seleccionar Eventos</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="logout.php"><i class="fas fa-power-off"></i> Log-Out: ({{main.user.nombre}}) </a>
+      </li>
+
+
+
+    </ul>
+
+
+
+  </div>
+</nav>
+<div ng-view></div>
+<div class="modal fade" id="modalGafete" tabindex="-1" role="dialog" aria-labelledby="modalLogin" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modalbody">
+
+      <div id="gafete">
+
+                <img src="images/crede.png" class="img-fluid" />
+
+          <div id="codigoqr" class="center-block">
+            <div class="titulos1">{{main.user.nombre}} {{usuario.appat}} {{usuario.apmat}}</div>
+
+          <qr  class="qr" text="main.user.link" image="true" size="140"></qr>
+
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

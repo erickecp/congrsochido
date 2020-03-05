@@ -1,0 +1,156 @@
+<div class="container">
+  <br>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4 class="titulos" align="center">Programa
+        <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalprog" data-backdrop="static" data-keyboard="false">
+          <i class="fas fa-search" aria-hidden></i>
+        </button>
+      </h4>
+    </div>
+  </div>
+  <section>
+    <div class="row separado">
+      <div class="modal fade" tabindex="-1" role="dialog" id="modalprog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header mdh">
+              <h5 class="modal-title">Programa</h5>
+            </div>
+            <form name="formEvento">
+              <div class="modal-body">
+                <embed src="images/programa.pdf" frameborder="0" width="100%" height="400px">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div ng-init="obtieneHorasInicio();obtieneHorasTermino();">
+      <div class="row">
+        <div class="col-xs-12">
+          <h4 class="titulos">Mis Eventos
+            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalEvento" ng-click="diaSeleccionado=''">
+              <i class="fas fa-plus" aria-hidden></i>
+            </button></h4>
+        </div>
+      </div>
+      <div class="row separado">
+        <div class="col-xs-12 table-responsive">
+          <table class="table-bordered text-center">
+            <thead class="theadyo">
+              <tr>
+                <th>Nombre</th>
+                <th>Sede</th>
+                <th>ODS</th>
+                <th>Tipo</th>
+                <th>Hora de Inicio</th>
+                <th>Hora de Término</th>
+                <th>Capacidad</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody class="cuerpot">
+              <tr ng-repeat="es in eventosSelected">
+                <td>{{es.nombre}}</td>
+                <td>{{es.sede}}</td>
+                <td>{{es.ods}}</td>
+                <td>{{es.tipo}}</td>
+                <td>{{es.horaInicio}}</td>
+                <td>{{es.horaTermino}}</td>
+                <td>{{es.capacidad}}</td>
+                <td>
+                  <button type="button" class="btn btn-xs btn-danger" ng-click="quitarAsistencia(es.id_evento)">
+                    Anular Asistencia
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <!--
+  ███    ███  ██████  ██████   █████  ██
+  ████  ████ ██    ██ ██   ██ ██   ██ ██
+  ██ ████ ██ ██    ██ ██   ██ ███████ ██
+  ██  ██  ██ ██    ██ ██   ██ ██   ██ ██
+  ██      ██  ██████  ██████  ██   ██ ███████
+  -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalEvento">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header mdh">
+            <h5 class="modal-title">Datos del Evento</h5>
+          </div>
+          <form name="formEvento">
+            <div class="modal-body">
+              <div class="input-group">
+                <span class="input-group-addon">Día:</span>
+                <select type="text" class="form-control" ng-model="diaSeleccionado" ng-change="actualizaEventos(diaSeleccionado)">
+                  <option value=""></option>
+                  <option value="2018-11-26">26 de Noviembre</option>
+                  <option value="2018-11-27">27 de Noviembre</option>
+                </select>
+              </div>
+              <br>
+              <div class="input-group">
+                <span class="input-group-addon">Nombre:</span>
+                <select class="form-control" ng-model="eventoSeleccionado" ng-change="actualizaCampos(eventoSeleccionado)" ng-options="ev as ev.nombre for ev in eventosFiltrados track by ev.id_evento">
+                  <option value=""></option>
+                </select>
+              </div>
+              <br>
+              <p align="center" style="color:white; background: red; padding:center; width:100%; border-radius:5px;" class="label label-warning" ng-show="!cupoValido">Ya no hay cupo</p>
+              <br>
+              <div class="input-group">
+                <span class="input-group-addon">Sede:</span>
+                <input type="text" class="form-control" ng-model="evento.sede" disabled>
+              </div>
+              <br>
+              <div class="input-group">
+                <span class="input-group-addon">ODS:</span>
+                <input type="text" class="form-control" ng-model="evento.ods" disabled>
+              </div>
+              <br>
+              <div class="input-group">
+                <span class="input-group-addon">Tipo:</span>
+                <input type="text" class="form-control" ng-model="evento.tipo" disabled>
+              </div>
+              <br>
+              <div class="input-group">
+                <span class="input-group-addon">Hora de Inicio:</span>
+                <input type="text" class="form-control" ng-model="evento.horaInicio" disabled>
+              </div>
+              <br>
+              <div class="input-group">
+                <span class="input-group-addon">Hora de Término:</span>
+                <input type="text" class="form-control" ng-model="evento.horaInicio" disabled>
+              </div>
+              <br>
+              <div class="input-group">
+                <span class="input-group-addon">Capacidad:</span>
+                <input type="text" class="form-control" ng-model="evento.capacidad" disabled>
+              </div><br>
+              <div class="input-group">
+                <span class="input-group-addon">Inscritos:</span>
+                <input type="text" class="form-control" ng-model="evento.cantidad" disabled>
+              </div>
+              <br>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              <button class="btn btn-primary" data-dismiss="modal" ng-click="guardarAsistencia()" ng-disabled="evento.capacidad<=evento.cantidad || !cupoValido">Agregar Asistencia</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>

@@ -1,0 +1,151 @@
+<section ng-init="obtieneEventos();obtieneSedes();obtieneHorasInicio();obtieneHorasTermino();obtieneCarreras();">
+    <div class="container">
+        <br>
+        <div class="row">
+            <div class="col-xs-12">
+                <h4 class="titulos">Eventos
+                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalEvento">
+            <i class="fas fa-plus"></i>
+          </button></h4>
+            </div>
+        </div>
+
+        <section>
+            <div class="row separado">
+                <div class="col-xs-12 table-responsive">
+                    <table class="table-bordered text-center">
+                        <thead class="theadyo">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Sede</th>
+                                <th>ODS</th>
+                                <th>Tipo</th>
+                                <th>Hora de Inicio</th>
+                                <th>Hora de Término</th>
+                                <th>Capacidad</th>
+                                <th>Inscritos</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody class="cuerpot">
+                            <tr ng-repeat="p in eventos">
+                                <td>{{p.nombre}}</td>
+                                <td>{{p.sede}}</td>
+                                <td>{{p.ods}}</td>
+                                <td>{{p.tipo}}</td>
+                                <td>{{p.horaInicio}}</td>
+                                <td>{{p.horaTermino}}</td>
+                                <td>{{p.capacidad}}</td>
+                                <td>{{p.cantidad}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-xs btn-default " data-backdrop="static" data-toggle="modal" data-target="#modalEvento" ng-click="editarEvento(p)">
+                    <i class="fas fa-pen"></i>
+                  </button>
+                                    <button type="button" class="btn btn-xs btn-danger" ng-click="eliminarEvento(p)">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!--
+███    ███  ██████  ██████   █████  ██
+████  ████ ██    ██ ██   ██ ██   ██ ██
+██ ████ ██ ██    ██ ██   ██ ███████ ██
+██  ██  ██ ██    ██ ██   ██ ██   ██ ██
+██      ██  ██████  ██████  ██   ██ ███████
+-->
+        <div class="modal fade" tabindex="-1" role="dialog" id="modalEvento">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <h5 class="modal-title">Datos del Evento</h5>
+                    </div>
+                    <form name="formEvento">
+                        <div class="modal-body">
+                            <button type="button" class="btn small" ng-class="{'active btn-info': pestana=='generales', 'btn-default': pestana!='generales'}" ng-click="pestana='generales'">
+                Generales
+              </button>
+                            <button type="button" class="btn small" ng-class="{'active btn-info': pestana=='cupos', 'btn-default': pestana!='cupos'}" ng-click="pestana='cupos'">
+                Cupos
+              </button>
+                            <br><br>
+                            <div ng-show="pestana=='generales'">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Nombre:</span>
+                                    <input type="text" class="form-control" ng-model="evento.nombre" required>
+                                </div>
+                                <br>
+                                <div class="input-group">
+                                    <span class="input-group-addon">Salon:</span>
+                                    <select type="text" class="form-control" ng-model="evento.sede" ng-change="actualizaCapacidadCantidad(evento.sede)" required>
+                    <option ng-repeat="sd in sedes" value="{{sd.id_sede}}" >{{sd.nombre}}</option>
+                  </select>
+                                </div>
+                                <br>
+                                <div class="input-group">
+                                    <span class="input-group-addon">ODS:</span>
+                                    <select type="text" class="form-control" ng-model="evento.ods">
+                    <option ng-repeat="ne in odes" value="{{ne}}">{{ne}}</option>
+                  </select>
+                                </div>
+                                <br>
+                                <div class="input-group">
+                                    <span class="input-group-addon">Tipo:</span>
+                                    <select type="text" class="form-control" ng-model="evento.tipo">
+                    <option ng-repeat="ne in tipos" value="{{ne}}">{{ne}}</option>
+                  </select>
+                                </div>
+                                <br>
+                                <br>
+                                <div class="input-group">
+                                    <span class="input-group-addon">Hora de Inicio:</span>
+                                    <select class="form-control" ng-model="horaInicioSeleccionada" ng-change="actualizaHoraFin(horaInicioSeleccionada)" ng-options="hraI as hraI.hora for hraI in horasInicioDia track by hraI.id_hora">
+                    <option value=""></option>
+                  </select>
+                                </div>
+                                <br>
+                                <div class="input-group">
+                                    <span class="input-group-addon">Hora de Término:</span>
+                                    <select class="form-control" ng-model="horaTerminoSeleccionada" ng-change="evento.horaTermino=horaTerminoSeleccionada.id_hora" ng-options="hraT as hraT.hora for hraT in horasTerminoDia track by hraT.id_hora">
+                    <option value=""></option>
+                  </select>
+                                </div>
+                                <br>
+                                <div class="input-group">
+                                    <span class="input-group-addon">Edad Mínima:</span>
+                                    <input type="text" class="form-control" ng-model="evento.edadMin">
+                                </div>
+                                <br>
+                                <div class="input-group">
+                                    <span class="input-group-addon">Edad Máxima:</span>
+                                    <input type="text" class="form-control" ng-model="evento.edadMax">
+                                </div>
+                                <br>
+                            </div>
+                            <div ng-show="pestana=='cupos'">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Capacidad de la Sede:</span>
+                                    <input type="text" class="form-control" ng-model="evento.capacidad" disabled>
+                                </div>
+                                <br>
+                                <div class="input-group" ng-repeat="car in carreras">
+                                    <directiva-cantidad car="car"></directiva-cantidad>
+                                </div><br>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            <button class="btn btn-primary" data-dismiss="modal" ng-click="guardarEvento()" ng-disabled="!formEvento.$valid || evento.capacidad === evento.cantidad">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

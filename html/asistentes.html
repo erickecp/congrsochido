@@ -1,0 +1,226 @@
+<style>
+        @media print {
+        .oculto-impresion,
+        .oculto-impresion * {
+            display: none !important;
+        }
+</style>
+<div ng-init="obtieneAsistentes();obtieneCarreras();obtieneMails();">
+    <div class="container">
+        <br>
+        <div class="row">
+            <div class="col-xs-12">
+                <h5 class="titulos">Asistentes
+                    <button type="button" class="btn btn-sm btn-primary oculto-impresion" data-toggle="modal" data-target="#modalAsistente">
+            <i class="fas fa-plus"></i>
+          </button></h5>
+                <br>
+                <div class="input-group oculto-impresion">
+                    <h5 class="input-group-label p-1 titulos">Filtrar por:</h5>
+                    <select type="text" class="form-control" ng-model="filtrarPor">
+              <option value="">Todos</option>
+              <option value="utvco">UTVCO</option>
+              <option value="general">General</option>
+              <option value="especial">Invitado Especial</option>
+            </select>
+                </div>
+                <br>
+            </div>
+        </div>
+        <div class="row separado">
+            <div class="col-xs-12 table-responsive">
+                <table class="table-bordered text-center">
+                    <thead class="theadyo">
+                        <tr>
+                            <th class="p-1">Nombre</th>
+                            <th class="oculto-impresion">Código</th>
+                            <th class="p-2 oculto-impresion">Edad</th>
+                            <th>Teléfono</th>
+                            <th>Correo</th>
+                            <th>Ocupación</th>
+                            <th>Nivel de Estudios</th>
+                            <th>Tipo de Asistente</th>
+                            <th class="oculto-impresion">Matrícula</th>
+                            <th class="oculto-impresion">Carrera</th>
+                            <th class="p-2 oculto-impresion">Grupo</th>
+                            <th class="oculto-impresion">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="cuerpot">
+                        <tr ng-repeat="p in asistentes | filter:{tipo:filtrarPor}">
+                            <td>{{p.nombre}} {{p.appat}} {{p.apmat}}</td>
+                            <td class="oculto-impresion"><span ng-show="p.codigo">{{p.codigo}}</span><span ng-show="!p.codigo" class="btn btn-xs btn-info " ng-click="generarCodigo(p)">Generar código</span></td>
+                            <td class="oculto-impresion">{{p.edad}}</td>
+                            <td>{{p.telefono}}</td>
+                            <td>{{p.correo}}</td>
+                            <td>{{p.ocupacion}}</td>
+                            <td>{{p.nivelEstudios}}</td>
+                            <td>{{p.tipo}}</td>
+                            <td class="oculto-impresion">{{p.matricula}}</td>
+                            <td class="oculto-impresion">{{p.carrera}}</td>
+                            <td class="oculto-impresion">{{p.grupo}}</td>
+                            <td class="oculto-impresion " colspan="2">
+                                <span class="p-b-2">
+                                    <button type="button" class=" btn btn-xs btn-default" data-toggle="modal" data-target="#modalAsistente" ng-click="editarAsistente(p)">
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                </span>
+                                <span class="p-t-2"></span>
+                                <button type="button" class="btn btn-xs btn-danger" ng-click="eliminarAsistente(p)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <button type="button" class="btn btn-xs btn-default oculto-impresion" ng-click="imprimir()">
+          <i class="fas fa-print"> Imprimir</i>
+        </button>
+            </div>
+        </div>
+    </div>
+    <!--
+███    ███  ██████  ██████   █████  ██
+████  ████ ██    ██ ██   ██ ██   ██ ██
+██ ████ ██ ██    ██ ██   ██ ███████ ██
+██  ██  ██ ██    ██ ██   ██ ██   ██ ██
+██      ██  ██████  ██████  ██   ██ ███████
+-->
+    <div class="modal fade oculto-impresion" tabindex="-1" role="dialog" id="modalAsistente">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title">Datos del Asistente</h5>
+
+                </div>
+                <form name="formAsistente">
+                    <div class="modal-body">
+
+                        <div class="input-group">
+                            <span class="input-group-addon">Nombre(s)*:</span>
+                            <input type="text" class="form-control" ng-model="asistente.nombre" required>
+                        </div>
+                        <br>
+
+                        <div class="input-group">
+                            <span class="input-group-addon">Apellido Paterno*:</span>
+                            <input type="text" class="form-control" ng-model="asistente.appat" required>
+                        </div>
+                        <br>
+
+                        <div class="input-group">
+                            <span class="input-group-addon">Apellido Materno:</span>
+                            <input type="text" class="form-control" ng-model="asistente.apmat">
+                        </div>
+
+                        <br>
+
+                        <div class="input-group">
+                            <span class="input-group-addon">Edad*:</span>
+                            <input type="text" class="form-control" ng-model="asistente.edad" max="100" min="1" required>
+                        </div>
+                        <br>
+
+                        <div class="input-group">
+                            <span class="input-group-addon">Nacionalidad:</span>
+                            <input type="text" class="form-control" ng-model="asistente.nacionalidad">
+                        </div>
+
+                        <br>
+
+                        <div class="input-group">
+                            <span class="input-group-addon">Lugar de Nacimiento:</span>
+                            <input type="text" class="form-control" ng-model="asistente.lugarNacimiento">
+                        </div>
+                        <br>
+
+                        <div class="input-group">
+                            <span class="input-group-addon">Tel&eacutefono:</span>
+                            <input type="text" class="form-control" ng-model="asistente.telefono">
+                        </div>
+                        <br>
+
+                        <div class="input-group">
+                            <span class="input-group-addon">Correo (*):</span>
+                            <input type="email" class="form-control" ng-model="asistente.correo" ng-change="validaCorreo(asistente.correo)" required>
+                        </div>
+                        <br>
+                        <p align="center" style="color:white; background: red; padding:center; width:100%; border-radius:5px;" class="label label-warning" ng-show="!correoValido">El correo ya existe</p>
+
+                        <br>
+
+                        <div class="input-group">
+                            <span class="input-group-addon">Nivel de Estudios:</span>
+                            <select type="text" class="form-control" ng-model="asistente.nivelEstudios">
+                <option ng-repeat="ne in niveles" value="{{ne}}">{{ne}}</option>
+              </select>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">Ocupaci&oacuten:</span>
+                            <input type="text" class="form-control" ng-model="asistente.ocupacion">
+                        </div>
+                        <br>
+
+                        <div class="input-group">
+                            <span class="input-group-addon">Tipo de Usuario*:</span>
+                            <select type="text" class="form-control" ng-model="asistente.tipo" ng-click="setUt(asistente.tipo)" required>
+              <option value="utvco">UTVCO</option>
+              <option value="general">General</option>
+              <option value="especial">Invitado Especial</option>
+              <option value="admin">Administrador</option>
+              </select>
+                        </div>
+                        <br>
+
+                        <div class="input-group" ng-if="asistente.tipo=='utvco'">
+                            <span class="input-group-addon">Carrera:</span>
+                            <select class="form-control" ng-model="carreraSeleccionada" ng-change="actualizaGrupos(carreraSeleccionada)" ng-options="car as car.nombre for car in carreras track by car.id_carrera">
+                <option value=""></option>
+              </select>
+                        </div>
+                        <br>
+                        <div class="input-group" ng-if="asistente.tipo=='utvco'">
+                            <span class="input-group-addon">Grupo:</span>
+                            <select class="form-control" ng-model="grupoSeleccionado" ng-disabled="!seleccionarGrupo" ng-change="asistente.grupo=grupoSeleccionado.grupo" ng-options="gpo as gpo.grupo for gpo in gruposFiltrados track by gpo.grupo">
+                <option value=""></option>
+              </select>
+                        </div>
+                        <br>
+                        <div class="input-group" ng-if="asistente.tipo=='utvco'">
+                            <span class="input-group-addon">Matrícula:</span>
+                            <input type="text" class="form-control" ng-model="asistente.matricula">
+                        </div>
+
+                        <br>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="declaraAsistente()">Cerrar</button>
+                        <button class="btn btn-success" data-dismiss="modal" ng-click="guardarAsistente()" ng-disabled="!formAsistente.$valid || !correoValido">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade oculto-impresion" tabindex="-1" role="dialog" id="modalCodigo">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title center">CÓDIGO DEL ASISTENTE</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="jumbotron jumbotron-fluid">
+                        <div class="container">
+                            <h1 class="display-4 text-center">{{asistente.codigo}}</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="declaraAsistente()">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
